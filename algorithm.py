@@ -28,15 +28,14 @@ class Game:
     def __init__(self, puzzle_code):
         self.blocks = {}
         self.num_blocks = puzzle_code + 1
-        self.old_moves = [[self.blocks[(i, j)].number for i in range(int(self.num_blocks ** 0.5)) for j in
-                           range(int(self.num_blocks ** 0.5))]]
+        self.old_moves = []
         self.final_set = [i + 1 for i in range(self.num_blocks - 1)].append(0)
+        # self.start_set = [i for i in range(self.num_blocks)]
+        self.start_set = [1, 2, 3, 4, 5, 6, 0, 7, 8]
         self.get_solvable()
         self.win = False
         self.score = 0
         self.reset_game()
-        self.start_set = [i for i in range(self.num_blocks)]
-        self.start_set = [1, 2, 3, 4, 5, 6, 7, 0, 8]
 
     def reset_game(self):
         if self.win:
@@ -51,6 +50,8 @@ class Game:
         for i in range(int(self.num_blocks ** 0.5)):
             for j in range(int(self.num_blocks ** 0.5)):
                 self.assign_adjacent(i, j)
+        self.old_moves = [[self.blocks[(i, j)].number for i in range(int(self.num_blocks ** 0.5)) for j in
+                           range(int(self.num_blocks ** 0.5))]]
         self.score = self.calculate_score()
 
     def swap_blocks(self, block1, block2):
@@ -98,7 +99,7 @@ class Game:
     def get_solvable(self):
         while True:
             inversion = 0
-            shuffle(self.start_set)
+            # shuffle(self.start_set)
             for i in range(0, self.num_blocks - 1):
                 for j in range(i + 1, self.num_blocks):
                     if self.start_set[j] and self.start_set[i] and self.start_set[i] > self.start_set[j]:

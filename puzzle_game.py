@@ -1,4 +1,4 @@
-from puzzle import *
+from algorithm import *
 
 
 class GamePlay:
@@ -16,9 +16,9 @@ class GamePlay:
         while not self.close_game:
             self.print_blocks()
             if self.game.win:
-                key_pressed = input("YOU WIN!!!\nRESTART[R]\nQUIT[Q]\n")
+                key_pressed = input("YOU WIN!!!\nRESTART[R]\nQUIT[Q]\n").upper()
             else:
-                key_pressed = input("CONTINUE[C]\nHINT[H]\nQUIT[Q]\nRESET[R]\n")
+                key_pressed = input("CONTINUE[C]\nHINT[H]\nQUIT[Q]\nRESET[R]\n").upper()
             if key_pressed == "Q":
                 self.close_game = True
             elif key_pressed == "R":
@@ -29,7 +29,7 @@ class GamePlay:
                 if self.hint == -1:
                     print("No moves available!!!")
                 else:
-                    print(self.hint, self.find_block(self.hint).pos)
+                    print(self.hint, (self.find_block(self.hint).pos[0] + 1, self.find_block(self.hint).pos[1] + 1))
             if key_pressed == "C" or key_pressed == "H":
                 self.move(int(input("INPUT INDEX OF THE ROW: ")) - 1, int(input("INPUT INDEX OF THE COLUMN: ")) - 1)
 
