@@ -3,30 +3,29 @@ from puzzle import *
 
 class GamePlay:
     def __init__(self, puzzle_code):
-        self.closeGame = False
-        self.puzzle_Code = puzzle_code
+        self.close_game = False
+        self.puzzle_code = puzzle_code
         self.change = True
-        self.blockInfo = []
-        self.zeroBlock = None
-        self.row_size = int((self.puzzle_Code + 1) ** 0.5)
-        self.game = Game(self.puzzle_Code)
-        self.lastMove = None
+        self.zero_block = None
+        self.row_size = int((self.puzzle_code + 1) ** 0.5)
+        self.game = Game(self.puzzle_code)
+        self.last_move = None
         self.hint = -1
 
-    def mainLoop(self):
-        while not self.closeGame:
+    def main_loop(self):
+        while not self.close_game:
             self.print_blocks()
             if self.game.win:
                 key_pressed = input("YOU WIN!!!\nRESTART[R]\nQUIT[Q]\n")
             else:
                 key_pressed = input("CONTINUE[C]\nHINT[H]\nQUIT[Q]\nRESET[R]\n")
             if key_pressed == "Q":
-                self.closeGame = True
+                self.close_game = True
             elif key_pressed == "R":
                 self.hint = -1
                 self.game.reset_game()
             elif key_pressed == "H":
-                self.hint, score = self.game.nextHint(self.lastMove)
+                self.hint, score = self.game.next_hint(self.last_move)
                 if self.hint == -1:
                     print("No moves available!!!")
                 else:
@@ -35,12 +34,12 @@ class GamePlay:
                 self.move(int(input("INPUT INDEX OF THE ROW: ")) - 1, int(input("INPUT INDEX OF THE COLUMN: ")) - 1)
 
     def move(self, x, y):
-        self.zeroBlock = self.find_block(0)
+        self.zero_block = self.find_block(0)
         block, number = self.get_block(x, y)
         if block is not None or number != -1:
-            if block in (self.zeroBlock.up, self.zeroBlock.down, self.zeroBlock.left, self.zeroBlock.right):
-                self.game.swapBlocks(self.zeroBlock, block)
-                self.lastMove = self.zeroBlock
+            if block in (self.zero_block.up, self.zero_block.down, self.zero_block.left, self.zero_block.right):
+                self.game.swap_blocks(self.zero_block, block)
+                self.last_move = self.zero_block
 
     def get_block(self, x, y):
         return self.game.blocks[(x, y)], self.game.blocks[(x, y)].number
@@ -61,7 +60,7 @@ class GamePlay:
 difficulty = 0
 if difficulty == 0:
     game8 = GamePlay(8)
-    game8.mainLoop()
+    game8.main_loop()
 elif difficulty == 1:
     game8 = GamePlay(15)
-    game8.mainLoop()
+    game8.main_loop()
